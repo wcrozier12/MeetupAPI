@@ -1,0 +1,108 @@
+#wrapper{
+  padding-left: 0px;
+  transition: all 0.4s ease 0s;
+  display: inline-block;
+}
+
+#floatZip {
+  float:right;
+}
+#zipHolder, #zipSearch, #zipContainer {
+  float:right;
+  font-size: 18px
+}
+#userZip {
+  width:135px;
+  margin-right:0px;
+  float:right;
+}
+#sidebar-wrapper {
+  margin-right: -300px;
+  top: 50px;
+  right: 250px;
+  width: 300px;
+  background: gray;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  z-index: 1000;
+  transition: all 0.4s ease 0s;
+}
+
+#wrapper.active {
+  padding-right: 0;
+}
+
+#wrapper.active #sidebar-wrapper {
+  right: 0;
+}
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-nav li {
+  line-height: 40px;
+  text-indent: 20px;
+}
+
+.sidebar-nav li a {
+  color: #999999;
+  display: block;
+  text-decoration: none;
+  padding-left: 60px;
+}
+
+.sidebar-nav li a span:before {
+  position: absolute;
+  left: 0;
+  color: #41484c;
+  text-align: center;
+  width: 20px;
+  line-height: 18px;
+}
+
+#meetUpDiv:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+  text-decoration: none;
+}
+
+
+#menu-toggle #toggleMeetUp1 {
+    text-decoration: none;
+    display: inline-block;
+    padding-right: 15px;
+}
+
+@media (max-width:767px) {
+
+#wrapper {
+  padding-left: 0;
+}
+
+#sidebar-wrapper {
+  left: 0;
+}
+
+#wrapper.active {
+  position: relative;
+  left: 250px;
+}
+
+#wrapper.active #sidebar-wrapper {
+  left: 250px;
+  width: 250px;
+  transition: all 0.4s ease 0s;
+}
+
+#menu-toggle {
+  display: inline-block;
+}
+
+}
