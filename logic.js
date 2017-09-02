@@ -4,6 +4,7 @@ $('#zipHolder').hide();//Hides on window.load
 $('#sidebar-wrapper').hide();
 $('#toggleContainer').hide();
 $("#wrapper").toggleClass("active");
+$('#vids').hide();
 //-----------------------------------------------------MeetUp Variables-------------------------------------------------------------------//
 var topic = '';
 var zip = '';
@@ -78,7 +79,7 @@ $('#searchButton').on('click', function(event) {
 
   if ($('#userInput:text').val().trim() !== '' && $("#zipHolder").is(":visible")) { //Prevents searching if there is no input,
     $("#box").show(100);
-    $("#vids").empty();
+    $("#vids").empty().show();
     topic = $('#userInput:text').val().trim();   
     console.log(videoSearch);                                 //sets topic to user input, makes api call,
     $('#toggleContainer').show();                                                  //clears search box
@@ -163,10 +164,6 @@ let displayMeetUp = function() {   //Displays up meetup on HTML, reformats unix 
     }
 };
 //---------------------------------------------------------------------------------------------------------------------------------//
-
-
-
-
 }; //window On load
 
 
