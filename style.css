@@ -29,6 +29,9 @@
   transition: all 0.4s ease 0s;
 }
 
+iframe {
+  text-align: center;
+}
 #wrapper.active {
   padding-right: 0;
 }
@@ -67,10 +70,16 @@
   line-height: 18px;
 }
 
-#meetUpDiv:hover {
+.meetUpDiv:hover {
   color: #fff;
   background: rgba(255,255,255,0.2);
   text-decoration: none;
+}
+
+.meetUpDiv {
+    font-size:12px;
+    text-align:center;
+    width:250px;
 }
 
 

@@ -3,6 +3,7 @@ window.onload = function() {
 
 $('#zipHolder').hide();//Hides on window.load
 $('#sidebar-wrapper').hide();
+$('#meetUpContainer').hide();
 $("#wrapper").toggleClass("active");
 
 $("#menu-toggle").click(function(e) {
@@ -54,7 +55,7 @@ $('#searchButton').on('click', function(event) {
 
   if ($('#userInput:text').val().trim() !== '' && $("#zipHolder").is(":visible")) { //Prevents searching if there is no input,
     topic = $('#userInput:text').val().trim();                                    //sets topic to user input, makes api call,
-                                                                 //clears search box
+    $('#meetUpContainer').show();                                                             //clears search box
     $('#userInput:text').val('');
     if ($('#sidebar-wrapper').is(':visible')) {
       $('#meetUpHolder').empty();
@@ -95,6 +96,7 @@ let getMeetUp = function(){
           })
         }
           else {
+            $('#noResults').html('');
             displayMeetUp();
           };
       });
@@ -127,8 +129,9 @@ let displayMeetUp = function() {   //Displays up meetup on HTML, reformats unix 
     }
       meetUpDiv.append(p);
       meetUpDiv.append(img);
-      $('#meetUpHolder').append(meetUpDiv);
-      $('#meetUpHolder').append(link);    
+      meetUpDiv.append(link);
+      $('#sidebar-wrapper').append(meetUpDiv);
+  
     }
 };
 //---------------------------------------------------------------------------------------------------------------------------------//
