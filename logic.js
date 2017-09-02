@@ -1,10 +1,43 @@
-//-----------------------------------------------------MeetUp API JS----------------------------------------------------------------------------//
 window.onload = function() {
-
+$("#box").hide(100);
 $('#zipHolder').hide();//Hides on window.load
 $('#sidebar-wrapper').hide();
-$('#meetUpContainer').hide();
+$('#toggleContainer').hide();
 $("#wrapper").toggleClass("active");
+//-----------------------------------------------------MeetUp Variables-------------------------------------------------------------------//
+var topic = '';
+var zip = '';
+var results;
+var meetUpKey = '1a143e3f55f5e4a64664065683536';
+var queryUrl = 'https://api.meetup.com/2/open_events?key=' + meetUpKey + '&sign=true&photo-host=public&topic=' + topic + '&zip=' + zip + '&page=5&fields=next_event,time,group_photos&callback=?';
+var tryZip = '';
+//---------------------------------------------------------------------------------------------------------------------------------//
+//------------------------------------------------------YouTube variables---------------------------------------------------------------//
+var tubeURL = "https://www.googleapis.com/youtube/v3/";
+var youTubeKey = "AIzaSyC4tz1TDHpgGTkAyNR9ycjU0cixA6bDNnk";
+var videoSearch = '';
+//---------------------------------------------------YouTube API------------------------------------------------------------------//
+    
+let getYouTube = function(){
+      videoSearch = tubeURL + "search?&q=" + topic + "&part=snippet&chart=mostPopular&videoCategoryId=27&type=video&maxResults=1&key=" + youTubeKey;
+
+                $.ajax({
+                url: videoSearch,
+                method: "GET",             
+                dataType: 'jsonp'
+            })
+            .done(function(response) {
+              console.log(response);
+                    var videoId = response.items[0].id.videoId;
+
+                    console.log(response.items[0]); $('#vids').append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0'id='hi'></iframe>");                          
+            });
+};   
+//-----------------------------------------------------MeetUp API JS----------------------------------------------------------------------------//
+
+let emptySideBar = function(){
+  $('#sidebar-wrapper').empty();
+}
 
 $("#menu-toggle").click(function(e) {
     $('#sidebar-wrapper').show();
@@ -12,16 +45,6 @@ $("#menu-toggle").click(function(e) {
     $("#wrapper").toggleClass("active");
 
 });
-//-----------------------------------------------------MeetUp Variable-------------------------------------------------------------------//
-
-var topic = '';
-var zip = '';
-var results;
-var ApiKey = '1a143e3f55f5e4a64664065683536';
-var queryUrl = 'https://api.meetup.com/2/open_events?key=' + ApiKey + '&sign=true&photo-host=public&topic=' + topic + '&zip=' + zip + '&page=5&fields=next_event,time,group_photos&callback=?';
-var tryZip = '';
-
-//---------------------------------------------------------------------------------------------------------------------------------//
 //-----------------------------------------------------Zip Code/Search logic---------------------------------------------------------//
 function isValidUSZip(isZip) { // returns boolean; if user input is valid US zip code
    return /^\d{5}(-\d{4})?$/.test(isZip);
@@ -54,17 +77,21 @@ $('#searchButton').on('click', function(event) {
 
 
   if ($('#userInput:text').val().trim() !== '' && $("#zipHolder").is(":visible")) { //Prevents searching if there is no input,
-    topic = $('#userInput:text').val().trim();                                    //sets topic to user input, makes api call,
-    $('#meetUpContainer').show();                                                             //clears search box
+    $("#box").show(100);
+    $("#vids").empty();
+    topic = $('#userInput:text').val().trim();   
+    console.log(videoSearch);                                 //sets topic to user input, makes api call,
+    $('#toggleContainer').show();                                                  //clears search box
     $('#userInput:text').val('');
-    if ($('#sidebar-wrapper').is(':visible')) {
-      $('#meetUpHolder').empty();
-      getMeetUp();     
-    }
-    else {
-      $('#meetUpHolder').empty();
+    emptySideBar();
+    getYouTube();
+
+    if ($('#wrapper').hasClass('active')) {
       $('#sidebar-wrapper').show();
       $("#wrapper").toggleClass("active");
+      getMeetUp();
+    }
+    else {
       getMeetUp();
     }
   }
@@ -81,20 +108,21 @@ $('#searchButton').on('click', function(event) {
 //-----------------------------------------------------------MeetUp API Call-------------------------------------------------------//
 
 let getMeetUp = function(){ 
-    queryUrl = 'https://api.meetup.com/2/open_events?key=' + ApiKey + '&sign=true&photo-host=public&topic=' + topic + '&zip=' + zip + '&page=5&fields=next_event,time,group_photos&callback=?';
+    queryUrl = 'https://api.meetup.com/2/open_events?key=' + meetUpKey + '&sign=true&photo-host=public&topic=' + topic + '&zip=' + zip + '&page=5&fields=next_event,time,group_photos&callback=?';
     
     $.getJSON(queryUrl, null, function(data) { //initial API call      
       results = data.results;
-        if (data.code === 'badtopic' || results.length === 0) { //if no meetup found based on user search, defaults to javascript meetups
-          topic = 'javascript'
-          queryUrl = 'https://api.meetup.com/2/open_events?key=' + ApiKey + '&sign=true&photo-host=public&topic=' + topic + '&zip=' + zip + '&page=5&fields=next_event,time,group_photos&callback=?';
+      console.log(results);
+          if (data.code === 'badtopic' || results.length === 0) { //if no meetup found based on user search, defaults to javascript meetups
+            topic = 'javascript'
+            queryUrl = 'https://api.meetup.com/2/open_events?key=' + meetUpKey + '&sign=true&photo-host=public&topic=' + topic + '&zip=' + zip + '&page=5&fields=next_event,time,group_photos&callback=?';
       
           $.getJSON(queryUrl, null, function(data){ // Second API call 
             results = data.results;
-            $('#noResults').html('We couldnt find any meetups meeting your search criteria. Heres a few others you may be interested in:' + '<br>' + '<br>')
+            $('#sidebar-wrapper').html('We couldnt find any meetups meeting your search criteria. Heres a few others you may be interested in:' + '<br>' + '<br>');
             displayMeetUp();
           })
-        }
+          }
           else {
             $('#noResults').html('');
             displayMeetUp();
@@ -121,7 +149,7 @@ let displayMeetUp = function() {   //Displays up meetup on HTML, reformats unix 
       link.attr('target', '_blank');
       link.text('RSVP');
       meetUpDiv.addClass('meetUpDiv')
-    if (results[i].venue === undefined) {
+    if (results[i].venue === undefined) { //if no venue is listed
       p.html("<br>" + results[i].name + '<br>' + "Next Event: " + currentTime);
     }
     else {
@@ -135,6 +163,10 @@ let displayMeetUp = function() {   //Displays up meetup on HTML, reformats unix 
     }
 };
 //---------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
 }; //window On load
 
 
