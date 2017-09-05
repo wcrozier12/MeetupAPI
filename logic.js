@@ -1,10 +1,13 @@
 window.onload = function() {
 $("#box").hide(100);
 $('#zipHolder').hide();//Hides on window.load
-$('#sidebar-wrapper').hide();
 $('#toggleContainer').hide();
-$("#wrapper").toggleClass("active");
 $('#vids').hide();
+
+$('.sidebar').on('click', function(event) {
+	event.preventDefault();
+	$(this).toggleClass("open");
+});
 //-----------------------------------------------------MeetUp Variables-------------------------------------------------------------------//
 var topic = '';
 var zip = '';
@@ -34,18 +37,7 @@ let getYouTube = function(){
                     console.log(response.items[0]); $('#vids').append("<iframe width='100%' height='100%' src='https://www.youtube.com/embed/" + videoId + "' frameborder='0'id='hi'></iframe>");                          
             });
 };   
-//-----------------------------------------------------MeetUp API JS----------------------------------------------------------------------------//
 
-let emptySideBar = function(){
-  $('#sidebar-wrapper').empty();
-}
-
-$("#menu-toggle").click(function(e) {
-    $('#sidebar-wrapper').show();
-    e.preventDefault();
-    $("#wrapper").toggleClass("active");
-
-});
 //-----------------------------------------------------Zip Code/Search logic---------------------------------------------------------//
 function isValidUSZip(isZip) { // returns boolean; if user input is valid US zip code
    return /^\d{5}(-\d{4})?$/.test(isZip);
@@ -77,30 +69,21 @@ $('#searchButton').on('click', function(event) {
   event.preventDefault(event);
 
 
-  if ($('#userInput:text').val().trim() !== '' && $("#zipHolder").is(":visible")) { //Prevents searching if there is no input,
+  if ($('#searchInput:text').val().trim() !== '' && $("#zipHolder").is(":visible")) { //Prevents searching if there is no input,
     $("#box").show(100);
     $("#vids").empty().show();
-    topic = $('#userInput:text').val().trim();   
+    topic = $('#searchInput:text').val().trim();   
     console.log(videoSearch);                                 //sets topic to user input, makes api call,
     $('#toggleContainer').show();                                                  //clears search box
-    $('#userInput:text').val('');
-    emptySideBar();
+    $('#searchInput:text').val('');
     getYouTube();
-
-    if ($('#wrapper').hasClass('active')) {
-      $('#sidebar-wrapper').show();
-      $("#wrapper").toggleClass("active");
-      getMeetUp();
-    }
-    else {
-      getMeetUp();
-    }
+    getMeetUp();
   }
 
   else if ($('#zipHolder').is(':hidden')) {
     $('#searchError').html('Please select a zip code.')
     $('#zipForm').addClass('has-error');
-    $('#userInput:text').val('');
+    $('#searchInput:text').val('');
   };
 
 });
@@ -120,12 +103,12 @@ let getMeetUp = function(){
       
           $.getJSON(queryUrl, null, function(data){ // Second API call 
             results = data.results;
-            $('#sidebar-wrapper').html('We couldnt find any meetups meeting your search criteria. Heres a few others you may be interested in:' + '<br>' + '<br>');
+            $('#meetUpSidebar').html('We couldnt find any meetups meeting your search criteria. Here are a few others you may be interested in:' + '<br>' + '<br>');
             displayMeetUp();
           })
           }
           else {
-            $('#noResults').html('');
+            $('#meetUpSidebar').html('');
             displayMeetUp();
           };
       });
@@ -133,7 +116,7 @@ let getMeetUp = function(){
 };
 
 let displayMeetUp = function() {   //Displays up meetup on HTML, reformats unix time
-    for (var i =0; i < results.length; i ++){
+    for (var i =0; i < 3; i ++){
       var meetUpDiv=$('<div>');
       var p =  $('<p>');
       var link = $('<a>');
@@ -159,7 +142,7 @@ let displayMeetUp = function() {   //Displays up meetup on HTML, reformats unix 
       meetUpDiv.append(p);
       meetUpDiv.append(img);
       meetUpDiv.append(link);
-      $('#sidebar-wrapper').append(meetUpDiv);
+      $('#meetUpSidebar').append(meetUpDiv);
   
     }
 };

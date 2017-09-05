@@ -2,89 +2,83 @@
 <html lang=en-us>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="ItsOkayItsOfficial">
+    <link rel="stylesheet" href="https://bootswatch.com/simplex/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel='stylesheet' type='text/css' href='style.css'>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type='text/javascript' src='logic.js'>
-    </script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </head>
 
 <body>
     <!--HTML for meetUp  -->
 
-    <div id="wrapper">
-        <div class='row'>
-            <div class='col-md-3' class='pull-right'>
-                <div class="container-fluid" id='zipContainer'>
-                    <div class='form-group' id='zipForm'>
-                        <input type="text" class="form-control" placeholder="Your Zip Code.." id='userZip'>
-                        <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id='zipSearch'>Go!</button>
-                    </span>
-                    </div>
-                    <div class="btn-group" id='floatZip'>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            id='zipHolder'>
-                        <span class="caret"></span>
-                    </button>
+    <div class="sidebar-container">
+        <nav class="sidebar sidebar-right" id='meetUpSidebar'>
+            <h3>MeetUps near you:</h3>
 
-                        <ul class="dropdown-menu">
-                            <li><a id='changeZip'>Change Zip Code</a></li>
-                        </ul>
-                    </div>
-                    <div id="sidebar-wrapper">
-                            <div id='noResults'> </div>
-                            <div id='meetUpHolder'></div>
+        </nav>
+        <nav class="sidebar sidebar-left">
+            <h3 id='meetUpHeader'>Menu</h3>
+            <a href="#">Celery seakale</a>
+            <a href="#">Dulse daikon</a>
+            <a href="#">Zucchini garlic</a>
+            <a href="#">Catsear azuki bean</a>
+            <a href="#">Dandelion bunya</a>
+            <a href="#">Rutabaga</a>
+        </nav>
+    </div>
 
-                    </div>
-                </div>
+<div class='form-group' id= 'zipForm'>
+    <input type="text" class="form-control" placeholder="Your Zip Code.." id='userZip'>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id='zipSearch'>Go!</button>
+        </span>
+</div>
+
+    <div class="btn-group" id='floatZip'>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id='zipHolder'>
+            <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu">
+            <li><a id='changeZip'>Change Zip Code</a></li>
+        </ul>
+    </div>
+
+    <div id='noResults'> </div>
+    <div id='meetUpHolder'></div>
+
+
+
+    <nav class="site-nav active">
+        <img class="navbar-brand" src="assets/img/owl_logo_1.svg">
+        <form class="navbar-form navbar-center">
+            <div for="searchInput" class="form-group">
+                <input id="searchInput" type="text" class="form-control" placeholder="search term">
             </div>
-            <div class='col-md-3'>
-                <div id='toggleContainer'>
-                    <a id="menu-toggle" href="#" class="glyphicon glyphicon-align-justify btn-menu toggle">
-                        <div id='toggleMeetUp1'>Toggle MeetUp</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-12'>
-                    <div class='container'>
-                        <div class='col-md-4'>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search.." id='userInput' autocomplete="off">
-                                <div id='searchError'> </div>
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" id='searchButton'>Go!</button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <button id="searchButton" type="submit" class="btn btn-default">Search</button>
+        </form>
+    </nav>
 
 
 
-
-        <div id="vids" style="position:relative;height:0;width:700px;height:300px;margin-left:25%;border:2px black 
+    <div id="vids" style="position:relative;height:0;width:700px;height:300px;margin-left:25%;border:2px black 
                 solid"></div>
 
-        <div id="box" style="width:700px;height:300px;margin-left:25%">
-            <p data-height="265" data-theme-id="0" data-slug-hash="RZvYVZ" data-default-tab="html,result" data-user="marcorulesk345"
-                data-embed-version="2" data-pen-title="RZvYVZ" data-preview="true" data-editable="true" class="codepen">See the Pen <a href="https://codepen.io/marcorulesk345/pen/RZvYVZ/">RZvYVZ</a> by marco (<a href="https://codepen.io/marcorulesk345">@marcorulesk345</a>)
-                on <a href="https://codepen.io">CodePen</a>.</p>
-        </div>
-        <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+    <div id="box" style="width:700px;height:300px;margin-left:25%">
+        <p data-height="265" data-theme-id="0" data-slug-hash="RZvYVZ" data-default-tab="html,result" data-user="marcorulesk345"
+            data-embed-version="2" data-pen-title="RZvYVZ" data-preview="true" data-editable="true" class="codepen">See the Pen <a href="https://codepen.io/marcorulesk345/pen/RZvYVZ/">RZvYVZ</a> by marco (<a href="https://codepen.io/marcorulesk345">@marcorulesk345</a>)
+            on <a href="https://codepen.io">CodePen</a>.</p>
+    </div>
 
 
-
+    <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='logic.js'></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
 
 </html>
